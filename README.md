@@ -40,5 +40,5 @@ Print the string of characters in "Hello World":
 
 ### Contributors
 
-1. ToluwaniAJ
-2. Mcsavvy
+1. ToluwaniAJ [Gmail] (toluwaniajibare@gmail.com)
+2. Mcsavvy [Gmail] (davemcsavvii@gmail.com)
