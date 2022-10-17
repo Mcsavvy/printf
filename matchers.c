@@ -10,7 +10,7 @@ int match_char(char *string)
 
 int match_string(char *string)
 {
-	if (string[0] is 's')
+	if (string[0] is 's' or string[0] is 'S')
 		return (1);
 	return (0);
 }
@@ -53,6 +53,13 @@ int match_hexadecimal(char *string)
 int match_octal(char *string)
 {
 	if (string[0] is 'o')
+		return (1);
+	return (0);
+}
+
+int match_binary(char *string)
+{
+	if (string[0] is 'b')
 		return (1);
 	return (0);
 }
