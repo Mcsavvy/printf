@@ -24,6 +24,8 @@ int print_uint(char *, va_list);
 int print_address(char *, va_list);
 int print_hexadecimal(char *, va_list);
 int print_octal(char *, va_list);
+int print_binary(char *, va_list);
+
 
 /* Matchers */
 int match_percent(char *);
@@ -34,5 +36,6 @@ int match_uint(char *);
 int match_address(char *);
 int match_hexadecimal(char *);
 int match_octal(char *);
+int match_binary(char *);
 
 #endif

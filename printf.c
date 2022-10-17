@@ -16,6 +16,7 @@ int expand(char *string, va_list args, int *len)
 		{match_address, print_address},
 		{match_hexadecimal, print_hexadecimal},
 		{match_octal, print_octal},
+		{match_binary, print_binary},
 		{NULL, NULL}
 	};
 
@@ -34,7 +35,7 @@ int expand(char *string, va_list args, int *len)
 
 int parse(char *string, va_list args)
 {
-	int index, outputLen, strLen;
+	int index, outputLen, strLen, match;
 
 	outputLen = 0;
 	strLen = lenstr(string);
@@ -43,9 +44,12 @@ int parse(char *string, va_list args)
 	index = findchr(string, '%');
 	if (index is -1)
 		return (outputLen + print(string, strLen));
-	outputLen += 1 + print(string, index);
+	outputLen += print(string, index);
 	string = trim(string, index + 1);
-	string = trim(string, expand(string, args, &outputLen));
+	match = expand(string, args, &outputLen);
+	if (match is 0)
+		outputLen += _putchar('%');
+	string = trim(string, match);
 	if (string[0] is nullbyte)
 		return (outputLen);
 	return (outputLen + parse(string, args));
