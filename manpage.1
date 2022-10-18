@@ -14,32 +14,48 @@
 . ftr VB CB
 . ftr VBI CBI
 .\}
-.TH "_printf" "1" "" "Version 0.0" "Frivolous \[lq]_printf\[rq] Documentation"
+.TH "_printf" "1" "" "Version 1.0" "Custom _printf Documentation"
 .hy
 .SH NAME
 .PP
-_printf - format and print data
+**_printf** - format and print data
 .SH SYNOPSIS
 .PP
-_printf FORMAT [ARGUMENT]\&...
+**_printf(const char *format, \&...)**
 .SH DESCRIPTION
 .PP
 Produces output according to a format.
-.SH SUPPORTED FORMATS
-.PP
-%c\ \ \ \ prints a single character
-.PP
-%s\ \ \ \ prints a string
-.PP
-%%\ \ \ \ prints a `%'
+The format is the string that contains the text to be written to stdout.
+It can optionally contain embedded format tags that are replaced by the
+values specified in subsequent additional arguments and formatted as
+requested.
+.SS SUPPORTED FORMAT TAGS
+.TP
+%c
+prints a single character
+.TP
+%s
+prints a string
+.TP
+%%
+prints a `%'
+.SH EXAMPLES
+.IP
+.nf
+\f[C]
+_printf(\[dq]My name is %s, I\[aq]m %d years old and I stay at %c block.\[dq] \[dq]John\[dq], 69, \[aq]D\[aq]);
+// output
+\[dq]My name is John, I\[aq]m 69 years old and I stay at D block.\[dq]
+\f[R]
+.fi
 .SH BUGS
 .PP
 See GitHub Issues: ISSUES (https://github.com/mcsavy/printf/issues)
-.SH AUTHOR
+.SH AUTHORS
 .IP \[bu] 2
-Toluwani <https://github.com/ToluwaniAJ>
+Toluwani (https://github.com/ToluwaniAJ)
 .IP \[bu] 2
-Mcsavvy <https://github.com/Mcsavvy>
+Mcsavvy (https://github.com/Mcsavvy)
 .SH SEE ALSO
 .PP
 \f[B]printf(1)\f[R]
