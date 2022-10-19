@@ -1,9 +1,14 @@
-#include "headers/parser.h"
-#include "headers/macros.h"
+#include "main.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "headers/search.h"
 
+/**
+ * expand - expand a format specifier into an actual value
+ * @string: format string
+ * @args: variadic arguments
+ * @len: length of characters printed
+ * Return: width of specifier
+ */
 int expand(char *string, va_list args, int *len)
 {
 	int i, matchWidth;
@@ -20,11 +25,11 @@ int expand(char *string, va_list args, int *len)
 		{NULL, NULL}
 	};
 
-	for (i = 0; parsers[i].match isnot NULL; i++)
+	for (i = 0; parsers[i].match != NULL; i++)
 	{
 
 		matchWidth = parsers[i].match(string);
-		if (matchWidth isnot 0)
+		if (matchWidth != 0)
 		{
 			*len = *len + parsers[i].print(string, args);
 			break;
@@ -33,40 +38,65 @@ int expand(char *string, va_list args, int *len)
 	return (matchWidth);
 }
 
+/**
+ * parse - parse a string along with format specifiers
+ * @string: string to parse
+ * @args: variadic arguments
+ * Return: number of characters printed
+ */
 int parse(char *string, va_list args)
 {
 	int index, outputLen, strLen, match;
 
 	outputLen = 0;
 	strLen = lenstr(string);
-	if (strLen is 0)
+	if (strLen == 0)
+	{
+		_putchar('\0');
 		return (0);
+	}
 	index = findchr(string, '%');
-	if (index is -1)
-		return (outputLen + print(string, strLen));
-	outputLen += print(string, index);
-	string = trim(string, index + 1);
-	match = expand(string, args, &outputLen);
-	if (match is 0)
-		outputLen += _putchar('%');
-	string = trim(string, match);
-	if (string[0] is nullbyte)
+	if (index == -1)
+	{
+		outputLen += print(string, strLen);
+		_putchar('\0');
 		return (outputLen);
+	}
+	outputLen += print(string, index);
+	string += index + 1;
+	match = expand(string, args, &outputLen);
+	if (match == 0)
+		outputLen += _putchar('%');
+	string += match;
+	if (string[0] == nullbyte)
+	{
+		_putchar('\0');
+		return (outputLen);
+	}
 	return (outputLen + parse(string, args));
 }
 
+/**
+ * _printf - prints formatted string
+ * @format: format string
+ * Return: length of characters printed
+ */
 int _printf(const char *format, ...)
 {
 	va_list args;
-	char *string;
-	int outputLen;
+	char *fmt;
+	int outputLen, i;
 
-	string = makecopy(format);
-	if (string is NULL)
-		exit(98);
+	fmt = (char *)malloc(lenstr(format) + 1);
+
+	if (fmt == NULL)
+		return (0);
+	for (i = 0; i < lenstr(format); i++)
+		fmt[i] = format[i];
+	fmt[i] = nullbyte;
 	va_start(args, format);
-	outputLen = parse(string, args);
+	outputLen = parse(fmt, args);
 	va_end(args);
-	free(string);
+	free(fmt);
 	return (outputLen);
 }

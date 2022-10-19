@@ -1,4 +1,4 @@
 *.o
 build
 core
-main
+tests

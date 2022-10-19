@@ -1,21 +1,31 @@
 gccFlags := -Wall -Wno-format -Werror -Wextra -pedantic -std=gnu89 -g
 
-strings.o: strings.c headers/strings.h
-	gcc $(gccFlags) -c strings.c
+bin.o: main.h bin.c
+	gcc $(gccFlags) -c bin.c
+oct.o: main.h oct.c
+	gcc $(gccFlags) -c oct.c
+hex.o: main.h hex.c
+	gcc $(gccFlags) -c hex.c
+int.o: main.h int.c
+	gcc $(gccFlags) -c int.c
+long.o: main.h long.c
+	gcc $(gccFlags) -c long.c
+char.o: main.h char.c
+	gcc $(gccFlags) -c char.c
+string.o: main.h string.c
+	gcc $(gccFlags) -c string.c
 search.o: search.c headers/search.h strings.o
 	gcc $(gccFlags) -c search.c
-numbers.o: numbers.c headers/numbers.h strings.o
+numbers.o: main.h numbers.c
 	gcc $(gccFlags) -c numbers.c
-printers.o: printers.c headers/parser.h strings.o
-	gcc $(gccFlags) -c printers.c
-matchers.o: matchers.c headers/parser.h
-	gcc $(gccFlags) -c matchers.c
-printf.o: printf.c headers/parser.h search.o
+utils.o: main.h utils.c
+	gcc $(gccFlags) -c utils.c
+tests/main.o: main.h tests/main.c
+	gcc $(gccFlags) -c tests/main.c -o tests/main.o
+printf.o: main.h printf.c
 	gcc $(gccFlags) -c printf.c
-main.o: main.c printf.o
-	gcc $(gccFlags) -c main.c
-main: strings.o search.o numbers.o printers.o matchers.o printf.o main.o
-	gcc $(gccFlags) strings.o search.o numbers.o printers.o matchers.o printf.o main.o -o main
+main: tests/main.o bin.o char.o hex.o int.o long.o oct.o string.o utils.o numbers.o printf.o
+	gcc $(gccFlags) bin.o char.o hex.o int.o long.o oct.o string.o utils.o numbers.o tests/main.o printf.o -o tests/main
 
 # MANPAGE
 manpage.1: manpage.1.md
