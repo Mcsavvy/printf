@@ -80,7 +80,10 @@ int print_string(char *fmt, va_list args)
 	switch (fmt[0])
 	{
 	case 's':
-		length = print(s, lenstr(s));
+		if (s == NULL)
+			length = print(s, lenstr(s));
+		else
+			length = print(s, "(null)");
 		break;
 	case 'S':
 		length += hexed(s);
